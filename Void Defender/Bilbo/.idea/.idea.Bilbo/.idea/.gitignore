@@ -1,0 +1,13 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/contentModel.xml
+/projectSettingsUpdater.xml
+/.idea.Bilbo.iml
+/modules.xml
+# Datasource local storage ignored files
+/../../../../../../../../../../../:\Users\User\Desktop\Cognitive Science\Info & AI\IntroductionToUnity\Bilbo\.idea\.idea.Bilbo\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
