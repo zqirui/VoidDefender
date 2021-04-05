@@ -30,12 +30,17 @@ public class Player : MonoBehaviour
     [SerializeField] 
     private SpawnManager _spawnManager;
 
+    [SerializeField] 
+    private HealthBar _healthBar;
+    
     [SerializeField]
-    public bool _useBurst = false;
+    public bool _usePowerUp = false;
 
     [SerializeField] 
     private float _powerupTimeout = 5f;
 
+    private int _powerUpsIndex;
+    
     void Start()
     {
         //Reset Player position on Start
@@ -55,6 +60,7 @@ public class Player : MonoBehaviour
         //reduce _lives by one
         //if health is 0 destroy the player
         _lives -= 1;
+        _healthBar.RemoveHeart();
         
         if (_lives == 0)
         {
@@ -87,15 +93,13 @@ public class Player : MonoBehaviour
             _timeToVaccinate = Time.time + _vaccinationRate;
             //Instantiating Prefab
             
-            if (!_useBurst)
+            if (!_usePowerUp)
             {
                 Instantiate(_vaccinePrefab, transform.position + new Vector3(x:0, y:0.85f, z:0), Quaternion.identity);
             }
             else
             {
-                System.Random random = new System.Random();
-                int index = random.Next(0, _powerUps.Count - 1); 
-                Instantiate(_powerUps[index], transform.position + new Vector3(x: 0, y: 0.7f, z: 0),
+                Instantiate(_powerUps[_powerUpsIndex], transform.position + new Vector3(x: 0, y: 0.7f, z: 0),
                     Quaternion.Euler(270,0,0));
             }
         }
@@ -145,15 +149,33 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void ActivatePowerUp()
+    public void ActivatePowerUp(bool isHeartContainer)
     {
-        _useBurst = true;
+        _usePowerUp = true;
+        if (!isHeartContainer)
+        {
+            //randomize power up each time when collecting
+            System.Random rand = new System.Random();
+            _powerUpsIndex = rand.Next(0, _powerUps.Count);
+            Debug.Log("Index: " + _powerUpsIndex);
+        }
+        else
+        {
+            _lives += 1;
+            _healthBar.AddHeart();
+        }
+        
         StartCoroutine(DeactivatePowerUp());
     }
 
     IEnumerator DeactivatePowerUp()
     {
         yield return new WaitForSeconds(_powerupTimeout);
-        _useBurst = false;
+        _usePowerUp = false;
+    }
+
+    public int GetLife()
+    {
+        return _lives;
     }
 }

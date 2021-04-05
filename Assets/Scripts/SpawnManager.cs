@@ -34,7 +34,7 @@ public class SpawnManager : MonoBehaviour
         while (_spawningON)
         {
             System.Random random = new System.Random();
-            int index = random.Next(0, _virusPrefabs.Count - 1);
+            int index = random.Next(0, _virusPrefabs.Count);
             //spawn a new virus
             Instantiate(_virusPrefabs[index], new Vector3(x: Random.Range(-6f, 6f), 7f, 0), Quaternion.Euler(x:-90, y:180, z:0),
                 this.transform);
@@ -49,7 +49,7 @@ public class SpawnManager : MonoBehaviour
         while (_spawningON)
         {
             System.Random random = new System.Random();
-            int index = random.Next(0, _powerUpPickUps.Count - 1);
+            int index = random.Next(0, _powerUpPickUps.Count);
             Instantiate(_powerUpPickUps[index], new Vector3(x: Random.Range(-6f, 6f), 7f, 0), Quaternion.identity, this.transform);
             yield return new WaitForSeconds(_powerUPSpawnrate);
         }

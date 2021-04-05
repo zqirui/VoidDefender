@@ -1,17 +1,22 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerUpCollectable : MonoBehaviour
+public class HeartContainer : MonoBehaviour
 {
+
     [SerializeField] 
     private float _speed = 2f;
-    
+
+    void Start()
+    {
+        transform.Rotate(270,0,0, Space.Self);
+    }
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        transform.Translate(Vector3.back * _speed * Time.deltaTime);
+        transform.Rotate(0,0,5, Space.Self);
         if (transform.position.y < -5f)
         {
             Destroy(this.gameObject);
@@ -22,7 +27,7 @@ public class PowerUpCollectable : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<Player>().ActivatePowerUp();
+            other.GetComponent<Player>().ActivatePowerUp(true);
             Destroy(this.gameObject);
         }
     }
