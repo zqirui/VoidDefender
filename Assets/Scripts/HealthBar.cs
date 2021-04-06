@@ -32,6 +32,7 @@ public class HealthBar : MonoBehaviour
     {
         _lives += 1;
         var heart = Instantiate(_heartPrefab, new Vector3(8.5f - 0.8f *(_lives - 1), 3.5f, 0), Quaternion.Euler(270,0,0), this.transform);
+        heart.GetComponent<AudioSource>().Play();
         _hearts.Add(heart);
     }
 }

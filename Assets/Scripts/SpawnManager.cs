@@ -36,7 +36,7 @@ public class SpawnManager : MonoBehaviour
             System.Random random = new System.Random();
             int index = random.Next(0, _virusPrefabs.Count);
             //spawn a new virus
-            Instantiate(_virusPrefabs[index], new Vector3(x: Random.Range(-6f, 6f), 7f, 0), Quaternion.Euler(x:-90, y:180, z:0),
+            Instantiate(_virusPrefabs[index], new Vector3(x: Random.Range(-7f, 7f), 7f, 0), Quaternion.identity,
                 this.transform);
             
             //wait for 2 seconds
@@ -50,8 +50,24 @@ public class SpawnManager : MonoBehaviour
         {
             System.Random random = new System.Random();
             int index = random.Next(0, _powerUpPickUps.Count);
-            Instantiate(_powerUpPickUps[index], new Vector3(x: Random.Range(-6f, 6f), 7f, 0), Quaternion.identity, this.transform);
+            Instantiate(_powerUpPickUps[index], new Vector3(x: Random.Range(-7f, 7f), 7f, 0), Quaternion.identity, this.transform);
             yield return new WaitForSeconds(_powerUPSpawnrate);
+        }
+    }
+
+    public void PlayEnemyDestroyedSound()
+    {
+        PlayAudioSourceByGameObjectName("EnemyDestroyedSound");
+    }
+    
+    private void PlayAudioSourceByGameObjectName(string gameObjectName)
+    {
+        foreach (AudioSource audio in this.GetComponentsInChildren<AudioSource>())
+        {
+            if (audio.gameObject.name == gameObjectName)
+            {
+                audio.Play();
+            }
         }
     }
 }

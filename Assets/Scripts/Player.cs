@@ -61,6 +61,7 @@ public class Player : MonoBehaviour
         //if health is 0 destroy the player
         _lives -= 1;
         _healthBar.RemoveHeart();
+        PlayAudioSourceByGameObjectName("DamageSound");
         
         if (_lives == 0)
         {
@@ -138,14 +139,14 @@ public class Player : MonoBehaviour
         {
             //Move player to the left side of the screen
             transform.position = new Vector3(x: -7, transform.position.y, z: 0);
-            transform.GetChild(0).Rotate(new Vector3(0,0,0),Space.World);
+            transform.GetChild(0).Rotate(new Vector3(0,horizontalInput,0),Space.World);
         }
         //Check if player escaped from the left side
         else if (transform.position.x <= -7)
         {
             //move player to the right side of the screen
             transform.position = new Vector3(x: 7, transform.position.y, z: 0);
-            transform.GetChild(0).Rotate(new Vector3(0,0,0),Space.World);
+            transform.GetChild(0).Rotate(new Vector3(0,horizontalInput,0),Space.World);
         }
     }
 
@@ -154,6 +155,7 @@ public class Player : MonoBehaviour
         _usePowerUp = true;
         if (!isHeartContainer)
         {
+            PlayAudioSourceByGameObjectName("PowerUpPickUpSound");
             //randomize power up each time when collecting
             System.Random rand = new System.Random();
             _powerUpsIndex = rand.Next(0, _powerUps.Count);
@@ -177,5 +179,16 @@ public class Player : MonoBehaviour
     public int GetLife()
     {
         return _lives;
+    }
+
+    private void PlayAudioSourceByGameObjectName(string gameObjectName)
+    {
+        foreach (AudioSource audio in this.GetComponentsInChildren<AudioSource>())
+        {
+            if (audio.gameObject.name == gameObjectName)
+            {
+                audio.Play();
+            }
+        }
     }
 }
