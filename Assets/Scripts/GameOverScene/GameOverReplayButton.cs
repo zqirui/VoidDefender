@@ -16,7 +16,7 @@ public class GameOverReplayButton : MonoBehaviour
         if(oldCanvas != null)
             Destroy(oldCanvas.gameObject);
         //restart Game Scene
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
 }

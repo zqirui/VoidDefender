@@ -90,6 +90,11 @@ public class SubmitHighScoreButton : MonoBehaviour
         return highScores;
     }
 
+    public static List<HighScorePlayer> GetHighScore(string filePath)
+    {
+        _highScoreFilePath = filePath;
+        return GetHighScore();
+    }
     private void WriteOutNewHighScore(List<HighScorePlayer> newHighScores)
     {
         Debug.Log("High Score File Path: " + _highScoreFilePath);

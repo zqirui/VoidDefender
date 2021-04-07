@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
             
             _uiManager.HideVisuals();
             //transition to Game Over Scene
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(2);
         }
     }
 
