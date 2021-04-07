@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Corona : MonoBehaviour
@@ -13,8 +14,9 @@ public class Corona : MonoBehaviour
     [SerializeField] 
     private float _pandemicSpread = 5f;
 
-    [SerializeField] private GameObject _rocketCollisionZone;
-    
+    [SerializeField] 
+    private GameObject _rocketCollisionZone;
+
     // Start is called before the first frame update
     void Start()
     {

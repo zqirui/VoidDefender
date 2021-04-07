@@ -19,6 +19,19 @@ public class UIManager : MonoBehaviour
         _scoreText.text = "Score: " + _score;
     }
 
+    private void Update()
+    {
+        if (_score >= 20)
+        {
+            GameObject.FindWithTag("Player").GetComponent<Player>()._useDVaccine = true;
+        }
+
+        if (_score >= 50)
+        {
+            GameObject.FindWithTag("Player").GetComponent<Player>()._vaccinationRate = 0.1f;
+        }
+    }
+
     public void AddScore(int score)
     {
         _score += score;
