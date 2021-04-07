@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18133342, g: 0.15538809, b: 0.115076564, a: 1}
+  m_IndirectSpecularColor: {r: 0.18152699, g: 0.15557992, b: 0.11519592, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -661,6 +661,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 5
   _vaccinePrefab: {fileID: 8273476823613856599, guid: cee4b9d0ac682624289a6efd0f715ac5, type: 3}
+  _doubleVaccine: {fileID: 3639523311302966176, guid: 02d61d62117c5bc45971fec985506092, type: 3}
   _powerUps:
   - {fileID: 3119571765329621420, guid: 2bae559f85242d149b6d09d465bb84d8, type: 3}
   - {fileID: 8107536373107303914, guid: 139cfc42d13e057439aaffc570078e6c, type: 3}
@@ -670,6 +671,7 @@ MonoBehaviour:
   _spawnManager: {fileID: 891541131}
   _healthBar: {fileID: 124224071}
   _usePowerUp: 0
+  _useDVaccine: 0
   _powerupTimeout: 5
 --- !u!54 &1061343369
 Rigidbody:

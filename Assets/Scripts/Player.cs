@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Player : MonoBehaviour
 {
@@ -13,12 +16,15 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _vaccinePrefab;
 
+    [SerializeField]
+    private GameObject _doubleVaccine;
+
     [SerializeField] 
     private List<GameObject> _powerUps;
     
-    [Header("Vaccination Parameter")]
+    [Header("Vaccination Parameters")]
     [SerializeField] 
-    private float _vaccinationRate = 0.4f;
+    public float _vaccinationRate = 0.4f;
     private float _timeToVaccinate = -1f;
     
     [SerializeField]
@@ -36,6 +42,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     public bool _usePowerUp = false;
 
+    [SerializeField] 
+    public bool _useDVaccine = false;
+
+    [Header("Powerup Parameters")]
     [SerializeField] 
     private float _powerupTimeout = 5f;
 
@@ -96,7 +106,15 @@ public class Player : MonoBehaviour
             
             if (!_usePowerUp)
             {
-                Instantiate(_vaccinePrefab, transform.position + new Vector3(x:0, y:0.85f, z:0), Quaternion.identity);
+                if (_useDVaccine)
+                {
+                    Instantiate(_doubleVaccine, transform.position + new Vector3(x: 0, y: 0.3f, z: 0),
+                        Quaternion.identity);
+                }
+                else
+                {
+                    Instantiate(_vaccinePrefab, transform.position + new Vector3(x: 0, y: 0.85f, z: 0), Quaternion.identity);
+                }
             }
             else
             {
@@ -113,8 +131,13 @@ public class Player : MonoBehaviour
         //read player input on x and y axis
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-        
-        transform.GetChild(0).Rotate(new Vector3(0,horizontalInput * (-1) * _speed * 3f * Time.deltaTime,0f),Space.World);
+
+        transform.GetChild(0).Rotate(new Vector3(0, horizontalInput * _speed * -10f * Time.deltaTime, 0), Space.World);
+        if(Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            float yRot = transform.GetChild(0).localRotation.eulerAngles.y;
+            transform.GetChild(0).Rotate(new Vector3(0,-yRot, 0), Space.World);
+        }
         //apply player movement
         Vector3 playerTranslate = new Vector3(x: 1f * horizontalInput * _speed * Time.deltaTime,
             y: 1f * verticalInput * _speed * Time.deltaTime, 0f);
