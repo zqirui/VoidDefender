@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using PowerUps;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -94,6 +95,7 @@ public class Player : MonoBehaviour
             _timeToVaccinate = Time.time + _vaccinationRate;
             //Instantiating Prefab
             
+            Debug.Log("Use PowerUp: " + _usePowerUp);
             if (!_usePowerUp)
             {
                 Instantiate(_vaccinePrefab, transform.position + new Vector3(x:0, y:0.85f, z:0), Quaternion.identity);
@@ -152,14 +154,15 @@ public class Player : MonoBehaviour
 
     public void ActivatePowerUp(bool isHeartContainer)
     {
-        _usePowerUp = true;
         if (!isHeartContainer)
         {
+            _usePowerUp = true;
             PlayAudioSourceByGameObjectName("PowerUpPickUpSound");
             //randomize power up each time when collecting
             System.Random rand = new System.Random();
             _powerUpsIndex = rand.Next(0, _powerUps.Count);
             Debug.Log("Index: " + _powerUpsIndex);
+            _uiManager.InstantiatePowerUpBar(GetActivePowerUpType(_powerUps[_powerUpsIndex]), _powerupTimeout);
         }
         else
         {
@@ -176,6 +179,11 @@ public class Player : MonoBehaviour
         _usePowerUp = false;
     }
 
+    public float GetPowerUpTimeout()
+    {
+        return _powerupTimeout;
+    }
+    
     public int GetLife()
     {
         return _lives;
@@ -190,5 +198,17 @@ public class Player : MonoBehaviour
                 audio.Play();
             }
         }
+    }
+
+    private ActivePowerUpType GetActivePowerUpType(GameObject powerUp)
+    {
+        ActivePowerUpType type = ActivePowerUpType.None;
+        if (powerUp.name.Contains("Burst"))
+            type = ActivePowerUpType.Burst;
+        if (powerUp.name.Contains("Rocket"))
+            type = ActivePowerUpType.Rocket;
+        if (powerUp.name.Contains("Shield"))
+            type = ActivePowerUpType.Shield;
+        return type;
     }
 }

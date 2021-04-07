@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using PowerUps;
 using UnityEngine;
 
 public class HeartContainer : MonoBehaviour
