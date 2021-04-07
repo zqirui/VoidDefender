@@ -152,25 +152,32 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void ActivatePowerUp(bool isHeartContainer)
+    public void ActivatePowerUp(bool isHealthPowerUp)
     {
-        if (!isHeartContainer)
+        if (isHealthPowerUp)
         {
-            _usePowerUp = true;
+            _lives += 1;
+            _healthBar.AddHeart();
+        }
+        else
+        {
             PlayAudioSourceByGameObjectName("PowerUpPickUpSound");
             //randomize power up each time when collecting
             System.Random rand = new System.Random();
             _powerUpsIndex = rand.Next(0, _powerUps.Count);
             Debug.Log("Index: " + _powerUpsIndex);
+            if (_powerUps[_powerUpsIndex].name.Contains("Shield"))
+            {
+                GameObject shield = Instantiate(_powerUps[_powerUpsIndex], this.transform.position, Quaternion.identity, this.transform);
+                Destroy(shield.gameObject, _powerupTimeout);
+            }
+            else
+            {
+                _usePowerUp = true;
+                StartCoroutine(DeactivatePowerUp());
+            }
             _uiManager.InstantiatePowerUpBar(GetActivePowerUpType(_powerUps[_powerUpsIndex]), _powerupTimeout);
         }
-        else
-        {
-            _lives += 1;
-            _healthBar.AddHeart();
-        }
-        
-        StartCoroutine(DeactivatePowerUp());
     }
 
     IEnumerator DeactivatePowerUp()

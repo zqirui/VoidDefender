@@ -56,6 +56,7 @@ public class Corona : MonoBehaviour
             {
                 Instantiate(_rocketCollisionZone, transform.position, Quaternion.identity);
             }
+
             //destroy Virus and Vaccine
             GameObject.FindWithTag("Player").GetComponent<Player>().RelayScore(1);
             FindObjectOfType<SpawnManager>().PlayEnemyDestroyedSound();

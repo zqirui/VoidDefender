@@ -78,7 +78,7 @@ public class UIManager : MonoBehaviour
             case ActivePowerUpType.Shield:
                 foreach (Material mat in _powerUpBarIconMats)
                 {
-                    if (mat.name.Contains("Burst"))
+                    if (mat.name.Contains("Shield"))
                         powerUpMat = mat;
                 }
                 break;
