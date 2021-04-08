@@ -1,11 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class Player : MonoBehaviour
 {
@@ -44,6 +40,9 @@ public class Player : MonoBehaviour
 
     [SerializeField] 
     public bool _useDVaccine = false;
+
+    [SerializeField] 
+    public bool _useTVaccine = false;
 
     [Header("Powerup Parameters")]
     [SerializeField] 
@@ -111,6 +110,12 @@ public class Player : MonoBehaviour
                     Instantiate(_doubleVaccine, transform.position + new Vector3(x: 0, y: 0.3f, z: 0),
                         Quaternion.identity);
                 }
+                else if (_useTVaccine)
+                {
+                    Instantiate(_vaccinePrefab, transform.position + new Vector3(x: 0, y: 0.85f, z: 0), Quaternion.identity);
+                    Instantiate(_vaccinePrefab, transform.position + new Vector3(x: 0, y: 0.85f, z: 0), Quaternion.Euler(0,0,25));
+                    Instantiate(_vaccinePrefab, transform.position + new Vector3(x: 0, y: 0.85f, z: 0), Quaternion.Euler(0,0,-25));
+                }
                 else
                 {
                     Instantiate(_vaccinePrefab, transform.position + new Vector3(x: 0, y: 0.85f, z: 0), Quaternion.identity);
@@ -132,6 +137,7 @@ public class Player : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
+        //Rotation (Barrel-Roll and Reset)
         transform.GetChild(0).Rotate(new Vector3(0, horizontalInput * _speed * -10f * Time.deltaTime, 0), Space.World);
         if(Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.RightArrow))
         {
@@ -158,17 +164,17 @@ public class Player : MonoBehaviour
         //Setting up horizontal boundaries for the player
         //Check if player escaped from the right side
 
-        if (transform.position.x >= 7)
+        if (transform.position.x >= 8)
         {
             //Move player to the left side of the screen
-            transform.position = new Vector3(x: -7, transform.position.y, z: 0);
+            transform.position = new Vector3(x: -8, transform.position.y, z: 0);
             transform.GetChild(0).Rotate(new Vector3(0,horizontalInput,0),Space.World);
         }
         //Check if player escaped from the left side
-        else if (transform.position.x <= -7)
+        else if (transform.position.x <= -8)
         {
             //move player to the right side of the screen
-            transform.position = new Vector3(x: 7, transform.position.y, z: 0);
+            transform.position = new Vector3(x: 8, transform.position.y, z: 0);
             transform.GetChild(0).Rotate(new Vector3(0,horizontalInput,0),Space.World);
         }
     }

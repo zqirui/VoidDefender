@@ -25,10 +25,15 @@ public class UIManager : MonoBehaviour
         {
             GameObject.FindWithTag("Player").GetComponent<Player>()._useDVaccine = true;
         }
-
         if (_score >= 50)
         {
             GameObject.FindWithTag("Player").GetComponent<Player>()._vaccinationRate = 0.1f;
+        }
+
+        if (_score >= 100)
+        {
+            GameObject.FindWithTag("Player").GetComponent<Player>()._useDVaccine = false;
+            GameObject.FindWithTag("Player").GetComponent<Player>()._useTVaccine = true;
         }
     }
 
