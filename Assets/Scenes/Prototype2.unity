@@ -240,6 +240,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scoreText: {fileID: 382785412}
   _versionText: {fileID: 911242116}
+  _powerUpBarPrefab: {fileID: 5400779055314915517, guid: 147346d6761463040862ae52031b5c95, type: 3}
+  _powerUpBarIconMats:
+  - {fileID: 2100000, guid: e760b03b751d8e2498950f4fc9759c5d, type: 2}
+  - {fileID: 2100000, guid: a246a23188c0a9b48bdab877c8b0979e, type: 2}
+  - {fileID: 2100000, guid: c35695c4dd92d58499e59bfc72b5b41f, type: 2}
 --- !u!1 &124224069
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,15 +666,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 5
   _vaccinePrefab: {fileID: 8273476823613856599, guid: cee4b9d0ac682624289a6efd0f715ac5, type: 3}
+  _doubleVaccine: {fileID: 3639523311302966176, guid: 02d61d62117c5bc45971fec985506092, type: 3}
   _powerUps:
   - {fileID: 3119571765329621420, guid: 2bae559f85242d149b6d09d465bb84d8, type: 3}
   - {fileID: 8107536373107303914, guid: 139cfc42d13e057439aaffc570078e6c, type: 3}
+  - {fileID: 7327664599644526140, guid: c1d8c202e7422954892b8aa010a8d6ca, type: 3}
   _vaccinationRate: 0.4
   _lives: 3
   _uiManager: {fileID: 80180472}
   _spawnManager: {fileID: 891541131}
   _healthBar: {fileID: 124224071}
   _usePowerUp: 0
+  _useDVaccine: 0
+  _useTVaccine: 0
   _powerupTimeout: 5
 --- !u!54 &1061343369
 Rigidbody:

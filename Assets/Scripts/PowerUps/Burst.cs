@@ -17,7 +17,6 @@ public class Burst : MonoBehaviour
 
         if (transform.position.y > 7f)
         {
-            //GameObject.FindWithTag("Player").GetComponent<Player>().RelayScore(1);
             //destroy the vaccine
             Destroy(this.gameObject);
         }

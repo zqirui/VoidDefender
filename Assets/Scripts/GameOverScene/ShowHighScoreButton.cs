@@ -25,6 +25,7 @@ public class ShowHighScoreButton : MonoBehaviour
         string highScoreTable = "";
 
         List<HighScorePlayer> highScores = SubmitHighScoreButton.GetHighScore();
+        
 
         for (int i = 0; i < highScores.Count; i++)
         {
