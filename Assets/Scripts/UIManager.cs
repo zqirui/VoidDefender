@@ -120,7 +120,7 @@ public class UIManager : MonoBehaviour
                         permaUpMat = mat;
                 } 
                 break;
-            case 2:
+            case 100:
                 foreach (Material mat in _permaUpMats)
                 {
                     if (mat.name.Contains("scatter"))
