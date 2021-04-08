@@ -114,6 +114,7 @@ public class Player : MonoBehaviour
                 {
                     Instantiate(_doubleVaccine, transform.position + new Vector3(x: 0, y: 0.3f, z: 0),
                         Quaternion.identity);
+                    
                 }
                 else if (_useTVaccine)
                 {
