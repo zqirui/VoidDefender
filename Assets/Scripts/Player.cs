@@ -53,7 +53,12 @@ public class Player : MonoBehaviour
     private float _powerupTimeout = 5f;
 
     private int _powerUpsIndex;
+
+    [SerializeField] private float _rocketDelay = 0.625f;
+    private float _nextRocketSpawnTime = -1f;
     
+    [SerializeField]
+    public bool _useKeyPressed = false;
     void Start()
     {
         //Reset Player position on Start
@@ -98,33 +103,42 @@ public class Player : MonoBehaviour
     {
         _uiManager.AddScore(score);
     }
-    void Vaccinate()
+
+    private void ShootLaser()
     {
-        // if spacebar pressed
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _timeToVaccinate)
-        {
-            // add the rate to the current time to set the future possible vaccination time
-            _timeToVaccinate = Time.time + _vaccinationRate;
-            //Instantiating Prefab
+        // add the rate to the current time to set the future possible vaccination time
+        _timeToVaccinate = Time.time + _vaccinationRate;
+        //Instantiating Prefab
             
-            Debug.Log("Use PowerUp: " + _usePowerUp);
-            if (!_usePowerUp)
+        Debug.Log("Use PowerUp: " + _usePowerUp);
+        if (!_usePowerUp)
+        {
+            if (_useDVaccine)
             {
-                if (_useDVaccine)
-                {
-                    Instantiate(_doubleVaccine, transform.position + new Vector3(x: 0, y: 0.3f, z: 0),
-                        Quaternion.identity);
+                Instantiate(_doubleVaccine, transform.position + new Vector3(x: 0, y: 0.3f, z: 0),
+                    Quaternion.identity);
                     
-                }
-                else if (_useTVaccine)
+            }
+            else if (_useTVaccine)
+            {
+                Instantiate(_vaccinePrefab, transform.position + new Vector3(x: 0, y: 0.85f, z: 0), Quaternion.identity);
+                Instantiate(_vaccinePrefab, transform.position + new Vector3(x: 0, y: 0.85f, z: 0), Quaternion.Euler(0,0,25));
+                Instantiate(_vaccinePrefab, transform.position + new Vector3(x: 0, y: 0.85f, z: 0), Quaternion.Euler(0,0,-25));
+            }
+            else
+            {
+                Instantiate(_vaccinePrefab, transform.position + new Vector3(x: 0, y: 0.85f, z: 0), Quaternion.identity);
+            }
+        }
+        else
+        {
+            if (_powerUps[_powerUpsIndex].name.Contains("Rocket"))
+            {
+                if (Time.time > _nextRocketSpawnTime)
                 {
-                    Instantiate(_vaccinePrefab, transform.position + new Vector3(x: 0, y: 0.85f, z: 0), Quaternion.identity);
-                    Instantiate(_vaccinePrefab, transform.position + new Vector3(x: 0, y: 0.85f, z: 0), Quaternion.Euler(0,0,25));
-                    Instantiate(_vaccinePrefab, transform.position + new Vector3(x: 0, y: 0.85f, z: 0), Quaternion.Euler(0,0,-25));
-                }
-                else
-                {
-                    Instantiate(_vaccinePrefab, transform.position + new Vector3(x: 0, y: 0.85f, z: 0), Quaternion.identity);
+                    _nextRocketSpawnTime = Time.time + _rocketDelay;
+                    Instantiate(_powerUps[_powerUpsIndex], transform.position + new Vector3(x: 0, y: 0.7f, z: 0),
+                        Quaternion.Euler(270,0,0));
                 }
             }
             else
@@ -133,6 +147,27 @@ public class Player : MonoBehaviour
                     Quaternion.Euler(270,0,0));
             }
         }
+    }
+    void Vaccinate()
+    {
+        if (!_useKeyPressed)
+        {
+            // if spacebar pressed
+            if (Input.GetKeyDown(KeyCode.Space) && Time.time > _timeToVaccinate)
+            {
+                ShootLaser();
+            }
+        }
+        else
+        {
+            if (Input.GetKey(KeyCode.Space) && Time.time > _timeToVaccinate)
+            {
+                Debug.Log("Space Pressed");
+                ShootLaser();
+            }
+        }
+        
+        
     }
     
     //player movement function

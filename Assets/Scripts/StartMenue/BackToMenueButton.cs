@@ -9,6 +9,7 @@ public class BackToMenueButton : MonoBehaviour
     
     public void ReturnToMenue()
     {
+        GameObject.Find("ButtonSound").GetComponent<AudioSource>().Play();
         foreach (GameObject obj in _objectsToUnshown)
         {
             obj.gameObject.SetActive(false);

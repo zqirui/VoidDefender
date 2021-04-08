@@ -38,13 +38,14 @@ public class UIManager : MonoBehaviour
             GameObject.FindWithTag("Player").GetComponent<Player>()._useDVaccine = true;
         }
 
-        if (_score > 2 && _score < 50)
+        if (_score > 20 && _score < 50)
             _instantiateIcon = true;
         if (_score == 50)
         {
             if(_instantiateIcon)
                 InstantiatePermaUpIcon();
             GameObject.FindWithTag("Player").GetComponent<Player>()._vaccinationRate = 0.1f;
+            GameObject.FindWithTag("Player").GetComponent<Player>()._useKeyPressed = true;
         }
 
         if (_score > 50 && _score < 100)

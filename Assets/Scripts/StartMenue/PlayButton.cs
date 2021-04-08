@@ -7,6 +7,7 @@ public class PlayButton : MonoBehaviour
 {
     public void StartGame()
     {
+        GameObject.Find("ButtonSound").GetComponent<AudioSource>().Play();
         SceneManager.LoadScene(1);
     }
 }
