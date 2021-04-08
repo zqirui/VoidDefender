@@ -103,6 +103,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8965230302916952766, guid: 01efb429e8509f348af33b8cf0983563, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01efb429e8509f348af33b8cf0983563, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -162,6 +166,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 01efb429e8509f348af33b8cf0983563, type: 3}
       propertyPath: m_Name
       value: Heart
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 01efb429e8509f348af33b8cf0983563, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5279095331347438348, guid: 01efb429e8509f348af33b8cf0983563, type: 3}
       propertyPath: m_Materials.Array.data[0]

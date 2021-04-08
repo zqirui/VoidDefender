@@ -12,6 +12,7 @@ public class StartShowHighScoreButton : MonoBehaviour
     
     public void ShowHighScore()
     {
+        GameObject.Find("ButtonSound").GetComponent<AudioSource>().Play();
         //hide some objects to free space
         foreach (var obj in _objectsToUnshown )
         {

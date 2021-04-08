@@ -6,6 +6,7 @@ public class QuitButton : MonoBehaviour
 {
     public void ExitGame()
     {
+        GameObject.Find("ButtonSound").GetComponent<AudioSource>().Play();
         Application.Quit(0);
     }
 }

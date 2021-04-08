@@ -18,6 +18,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private PowerUpTimerBar _powerUpBarPrefab;
 
     [SerializeField] private List<Material> _powerUpBarIconMats;
+
+    [SerializeField] private GameObject _permaUpIconPrefab;
+
+    [SerializeField] private List<Material> _permaUpMats;
+
+    private bool _instantiateIcon = true;
     void Start()
     {
         _scoreText.text = "Score: " + _score;
@@ -25,17 +31,29 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if (_score >= 20)
+        if (_score == 20)
         {
+            if(_instantiateIcon)
+                InstantiatePermaUpIcon();
             GameObject.FindWithTag("Player").GetComponent<Player>()._useDVaccine = true;
         }
-        if (_score >= 50)
+
+        if (_score > 20 && _score < 50)
+            _instantiateIcon = true;
+        if (_score == 50)
         {
+            if(_instantiateIcon)
+                InstantiatePermaUpIcon();
             GameObject.FindWithTag("Player").GetComponent<Player>()._vaccinationRate = 0.1f;
+            GameObject.FindWithTag("Player").GetComponent<Player>()._useKeyPressed = true;
         }
 
-        if (_score >= 100)
+        if (_score > 50 && _score < 100)
+            _instantiateIcon = true;
+        if (_score == 100)
         {
+            if(_instantiateIcon)
+                InstantiatePermaUpIcon();
             GameObject.FindWithTag("Player").GetComponent<Player>()._useDVaccine = false;
             GameObject.FindWithTag("Player").GetComponent<Player>()._useTVaccine = true;
         }
@@ -60,6 +78,7 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
+        
         //keep UIManager alive after Scene change
         DontDestroyOnLoad(transform.gameObject);
     }
@@ -73,6 +92,46 @@ public class UIManager : MonoBehaviour
         Destroy(bar.gameObject, powerUpTime);
     }
 
+    public void InstantiatePermaUpIcon()
+    {
+        var icon = Instantiate(_permaUpIconPrefab, new Vector3(0,0,0), Quaternion.Euler(450, -90, 90));
+        Debug.Log("Icon Instantiated");
+        icon.GetComponent<MeshRenderer>().material = GetPermaUpMaterial();
+        Destroy(icon.gameObject, 1f);
+        _instantiateIcon = false;
+    }
+
+    private Material GetPermaUpMaterial()
+    {
+        Material permaUpMat = null;
+        switch (_score)
+        {
+            case 20:
+                foreach (Material mat in _permaUpMats)
+                {
+                    if (mat.name.Contains("double"))
+                        permaUpMat = mat;
+                } 
+                break;
+            case 50:
+                foreach (Material mat in _permaUpMats)
+                {
+                    if (mat.name.Contains("fast"))
+                        permaUpMat = mat;
+                } 
+                break;
+            case 2:
+                foreach (Material mat in _permaUpMats)
+                {
+                    if (mat.name.Contains("scatter"))
+                        permaUpMat = mat;
+                } 
+                break;
+        }
+
+        return permaUpMat;
+    }
+    
     private Material GetCorrespondingMat(ActivePowerUpType type)
     {
         Material powerUpMat = null;

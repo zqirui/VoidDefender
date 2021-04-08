@@ -10,6 +10,7 @@ public class HowToPlayButton : MonoBehaviour
 
     public void ShowHowToPlay()
     {
+        GameObject.Find("ButtonSound").GetComponent<AudioSource>().Play();
         foreach (GameObject obj in _objectsToUnshown)
         {
             obj.gameObject.SetActive(false);
