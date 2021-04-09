@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private List<Material> _permaUpMats;
 
+    [SerializeField] private GameObject _audioSlider;
     private bool _instantiateIcon = true;
     void Start()
     {
@@ -74,6 +75,7 @@ public class UIManager : MonoBehaviour
     {
         _scoreText.gameObject.SetActive(false);
         _versionText.gameObject.SetActive(false);
+        _audioSlider.gameObject.SetActive(false);
     }
 
     private void Awake()
