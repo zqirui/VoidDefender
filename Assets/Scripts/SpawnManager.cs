@@ -7,7 +7,8 @@ using UnityEngine.Serialization;
 public class SpawnManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] private List<GameObject> _virusPrefabs;
+    [SerializeField] private GameObject _normalAlienPrefab;
+    [SerializeField] private GameObject _strongAlienPrefab;
 
     [SerializeField] private List<GameObject> _powerUpPickUps;
 
@@ -15,6 +16,9 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField] private float _powerUPSpawnrate = 5f;
 
+    [SerializeField] private GameObject _bossPrefab;
+
+    public bool _spawnStrongAliens = false;
     private bool _spawningON = true;
     void Start()
     {
@@ -30,14 +34,35 @@ public class SpawnManager : MonoBehaviour
     
     IEnumerator spawnSystem()
     {
+        System.Random rand = new System.Random();
         //forever = as long as the game is running
         while (_spawningON)
         {
-            System.Random random = new System.Random();
-            int index = random.Next(0, _virusPrefabs.Count);
-            //spawn a new virus
-            Instantiate(_virusPrefabs[index], new Vector3(x: Random.Range(-7f, 7f), 7f, 0), Quaternion.identity,
-                this.transform);
+            if (_spawnStrongAliens)
+            {
+                Debug.Log("Strong Alien Spawn active");
+                //randomely spawn weak or strong alien after score 30
+                int random = rand.Next(0, 2);
+                Debug.Log("Index: " + random);
+                if (random == 0)
+                {
+                    //spawn a strong alien
+                    Instantiate(_strongAlienPrefab, new Vector3(x: Random.Range(-7f, 7f), 7f, 0), Quaternion.identity,
+                        this.transform);
+                }
+                else
+                {
+                    //spawn a new virus
+                    Instantiate(_normalAlienPrefab, new Vector3(x: Random.Range(-7f, 7f), 7f, 0), Quaternion.identity,
+                        this.transform);
+                }
+            }
+            else
+            {
+                //spawn a new virus
+                Instantiate(_normalAlienPrefab, new Vector3(x: Random.Range(-7f, 7f), 7f, 0), Quaternion.identity,
+                    this.transform);
+            }
             
             //wait for 2 seconds
             yield return new WaitForSeconds(_delay);
@@ -69,6 +94,11 @@ public class SpawnManager : MonoBehaviour
                 audio.Play();
             }
         }
+    }
+
+    public void SpawnBoss()
+    {
+        Instantiate(_bossPrefab, new Vector3(Random.Range(-8f, 8f), 6f, 0f), Quaternion.Euler(0, 180, 0), this.transform);
     }
 }
 

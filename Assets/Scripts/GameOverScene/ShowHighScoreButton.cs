@@ -33,5 +33,6 @@ public class ShowHighScoreButton : MonoBehaviour
         }
 
         _highScoreTable.text = highScoreTable;
+        GameObject.Find("ButtonSound").GetComponent<AudioSource>().Play();
     }
 }

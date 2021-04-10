@@ -57,6 +57,7 @@ public class SubmitHighScoreButton : MonoBehaviour
         //make Inputfield and button invisible
         _highScoreNameInputField.gameObject.SetActive(false);
         this.gameObject.SetActive(false);
+        GameObject.Find("ButtonSound").GetComponent<AudioSource>().Play();
     }
 
     public static List<HighScorePlayer> GetHighScore()

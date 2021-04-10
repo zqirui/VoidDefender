@@ -15,6 +15,7 @@ public class GameOverReplayButton : MonoBehaviour
         var oldCanvas = GameObject.FindWithTag("GameUIManager");
         if(oldCanvas != null)
             Destroy(oldCanvas.gameObject);
+        GameObject.Find("ButtonSound").GetComponent<AudioSource>().Play();
         //restart Game Scene
         SceneManager.LoadScene(1);
     }
