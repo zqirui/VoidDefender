@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
+
 public class HowToPlayButton : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _objectsToUnshown;
     [SerializeField] private Button _returnButton;
-    [SerializeField] private Text _howToPlayText;
+    [SerializeField] private GameObject _howToPlayScrollView;
 
     public void ShowHowToPlay()
     {
@@ -16,6 +18,6 @@ public class HowToPlayButton : MonoBehaviour
             obj.gameObject.SetActive(false);
         }
         _returnButton.gameObject.SetActive(true);
-        _howToPlayText.gameObject.SetActive(true);
+        _howToPlayScrollView.SetActive(true);
     }
 }
