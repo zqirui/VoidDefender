@@ -24,6 +24,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private List<Material> _permaUpMats;
 
     [SerializeField] private GameObject _audioSlider;
+
+    [SerializeField] private bool _spawnBoss;
+
+    [SerializeField] private GameObject _bossWarningIcon;
+
+    [SerializeField] private Material _bossWarningIconMat;
     private bool _instantiateIcon = true;
     void Start()
     {
@@ -58,8 +64,27 @@ public class UIManager : MonoBehaviour
             GameObject.FindWithTag("Player").GetComponent<Player>()._useDVaccine = false;
             GameObject.FindWithTag("Player").GetComponent<Player>()._useTVaccine = true;
         }
+
+        //Todo: ausbauen _spawnBoss
+        if (_score == 150 || _spawnBoss)
+        {
+            InstantiateBossWarningIcon();
+            GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>().SpawnBoss();
+            _spawnBoss = false;
+        }
+        
+        if(_score > 30)
+            GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>()._spawnStrongAliens = true;
+        
     }
 
+    private void InstantiateBossWarningIcon()
+    {
+        var icon = Instantiate(_bossWarningIcon, new Vector3(0,0,0), Quaternion.Euler(450, -90, 90));
+        Debug.Log("Icon Instantiated");
+        icon.GetComponent<MeshRenderer>().material = _bossWarningIconMat;
+        Destroy(icon.gameObject, 3f);
+    }
     public void AddScore(int score)
     {
         _score += score;
