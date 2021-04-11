@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7265434986176541916}
   m_Layer: 0
   m_Name: BioTorpedo
-  m_TagString: Untagged
+  m_TagString: Virus
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,3 +111,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _torpedoSpeed: 2
   _collisionZone: {fileID: 3282946699367069423, guid: 6d5efecc2f640e14db0b8519fa0d2842, type: 3}
+  _firePrefab: {fileID: 4461804122701758593, guid: ef7d5c9e8b50cfd469209dc4aa697b77, type: 3}

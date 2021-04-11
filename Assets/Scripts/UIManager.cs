@@ -25,12 +25,14 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private GameObject _audioSlider;
 
-    [SerializeField] private bool _spawnBoss;
+    [SerializeField] public bool _spawnBoss = true;
 
     [SerializeField] private GameObject _bossWarningIcon;
 
     [SerializeField] private Material _bossWarningIconMat;
     private bool _instantiateIcon = true;
+    [SerializeField]
+    public bool _bossBeaten = false;
     void Start()
     {
         _scoreText.text = "Score: " + _score;
@@ -38,20 +40,22 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if (_score == 20)
+        if (_score == 30)
         {
             if(_instantiateIcon)
                 InstantiatePermaUpIcon();
             GameObject.FindWithTag("Player").GetComponent<Player>()._useDVaccine = true;
         }
 
-        if (_score > 20 && _score < 50)
+        if (_score > 30 && _score < 50)
             _instantiateIcon = true;
         if (_score == 50)
         {
             if(_instantiateIcon)
                 InstantiatePermaUpIcon();
-            GameObject.FindWithTag("Player").GetComponent<Player>()._vaccinationRate = 0.1f;
+            //double rate to shoot laser
+            GameObject.FindWithTag("Player").GetComponent<Player>()._vaccinationRate = 0.2f;
+            //allow using space bar pressed
             GameObject.FindWithTag("Player").GetComponent<Player>()._useKeyPressed = true;
         }
 
@@ -64,16 +68,17 @@ public class UIManager : MonoBehaviour
             GameObject.FindWithTag("Player").GetComponent<Player>()._useDVaccine = false;
             GameObject.FindWithTag("Player").GetComponent<Player>()._useTVaccine = true;
         }
-
-        //Todo: ausbauen _spawnBoss
-        if (_score == 150 || _spawnBoss)
+        
+        if (_score >= 150)
         {
-            InstantiateBossWarningIcon();
-            GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>().SpawnBoss();
-            _spawnBoss = false;
+            if (_spawnBoss)
+            {
+                InstantiateBossWarningIcon();
+                GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>().SpawnBoss();
+            }
         }
         
-        if(_score > 30)
+        if(_score > 20)
             GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>()._spawnStrongAliens = true;
         
     }
@@ -105,7 +110,6 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        
         //keep UIManager alive after Scene change
         DontDestroyOnLoad(transform.gameObject);
     }
@@ -119,12 +123,12 @@ public class UIManager : MonoBehaviour
         Destroy(bar.gameObject, powerUpTime);
     }
 
-    public void InstantiatePermaUpIcon()
+    private void InstantiatePermaUpIcon()
     {
         var icon = Instantiate(_permaUpIconPrefab, new Vector3(0,0,0), Quaternion.Euler(450, -90, 90));
         Debug.Log("Icon Instantiated");
         icon.GetComponent<MeshRenderer>().material = GetPermaUpMaterial();
-        Destroy(icon.gameObject, 1f);
+        Destroy(icon.gameObject, 2f);
         _instantiateIcon = false;
     }
 
@@ -133,7 +137,7 @@ public class UIManager : MonoBehaviour
         Material permaUpMat = null;
         switch (_score)
         {
-            case 20:
+            case 30:
                 foreach (Material mat in _permaUpMats)
                 {
                     if (mat.name.Contains("double"))

@@ -35,4 +35,12 @@ public class HealthBar : MonoBehaviour
         heart.GetComponent<AudioSource>().Play();
         _hearts.Add(heart);
     }
+
+    public void ClearBar()
+    {
+        foreach (GameObject heart in _hearts)
+        {
+            Destroy(heart.gameObject);
+        }
+    }
 }

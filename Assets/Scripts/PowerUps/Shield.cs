@@ -10,7 +10,10 @@ public class Shield : MonoBehaviour
         if (other.CompareTag("Virus"))
         {
             Destroy(other.gameObject);
-            GameObject.FindWithTag("Player").GetComponent<Player>().RelayScore(1);
+            if (!(other.name.Contains("BossBeam") || other.name.Contains("BioTorpedo")))
+            {
+                GameObject.FindWithTag("Player").GetComponent<Player>().RelayScore(1);
+            }
             FindObjectOfType<SpawnManager>().PlayEnemyDestroyedSound();
         }
     }

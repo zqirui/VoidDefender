@@ -6,11 +6,21 @@ using UnityEngine;
 public class Rocket : MonoBehaviour
 {
     [SerializeField] private float _rocketSpeed;
+
+    [SerializeField] private GameObject _firePrefab;
+
+    private bool _fire = true;
     
 
     // Update is called once per frame
     void Update()
     {
+        if (_fire)
+        {
+            Instantiate(_firePrefab,this.transform.position,Quaternion.Euler(90,0,0),this.transform);
+            _fire = false;
+        }
+        
         // Shooting up!
         transform.Translate(Vector3.forward * _rocketSpeed * Time.deltaTime);
 

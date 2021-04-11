@@ -117,6 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rocketSpeed: 2
+  _firePrefab: {fileID: 4461804122701758593, guid: ef7d5c9e8b50cfd469209dc4aa697b77, type: 3}
 --- !u!82 &8184561003063588918
 AudioSource:
   m_ObjectHideFlags: 0
