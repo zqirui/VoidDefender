@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BossScript : MonoBehaviour
 {
@@ -104,7 +106,10 @@ public class BossScript : MonoBehaviour
         {
             Destroy(this.gameObject);
             FindObjectOfType<SpawnManager>().PlayEnemyDestroyedSound();
-            //TODO: Victory Screen
+            //Transition to Game Over (Victory) Screen
+            GameObject.FindWithTag("GameUIManager").GetComponent<UIManager>().HideVisuals();
+            GameObject.FindWithTag("GameUIManager").GetComponent<UIManager>()._bossBeaten = true;
+            SceneManager.LoadScene(2);
         }
     }
 }

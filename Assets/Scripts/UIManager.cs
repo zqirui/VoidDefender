@@ -31,6 +31,8 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private Material _bossWarningIconMat;
     private bool _instantiateIcon = true;
+    [SerializeField]
+    public bool _bossBeaten = false;
     void Start()
     {
         _scoreText.text = "Score: " + _score;
@@ -105,7 +107,6 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        
         //keep UIManager alive after Scene change
         DontDestroyOnLoad(transform.gameObject);
     }

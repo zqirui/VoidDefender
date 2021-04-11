@@ -16,8 +16,11 @@ public class GameOverUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         int score = FindObjectOfType<UIManager>().GetScore();
+        if (FindObjectOfType<UIManager>()._bossBeaten)
+        {
+            _gameOverText.text = "Victory! You bet the Game!";
+        }
         bool newHighScore = IsNewHighScore(score);
         if (newHighScore)
         {
