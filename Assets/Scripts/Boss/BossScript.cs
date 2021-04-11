@@ -12,7 +12,7 @@ public class BossScript : MonoBehaviour
     private float _bossSpeed = 2.5f;
 
     [SerializeField] 
-    private int _bossLife = 100;
+    private int _bossLife = 200;
 
     [SerializeField] 
     private GameObject _bossBeam;

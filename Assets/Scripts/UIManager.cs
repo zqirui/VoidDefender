@@ -40,14 +40,14 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if (_score == 20)
+        if (_score == 30)
         {
             if(_instantiateIcon)
                 InstantiatePermaUpIcon();
             GameObject.FindWithTag("Player").GetComponent<Player>()._useDVaccine = true;
         }
 
-        if (_score > 20 && _score < 50)
+        if (_score > 30 && _score < 50)
             _instantiateIcon = true;
         if (_score == 50)
         {
@@ -69,7 +69,7 @@ public class UIManager : MonoBehaviour
             GameObject.FindWithTag("Player").GetComponent<Player>()._useTVaccine = true;
         }
         
-        if (_score == 150)
+        if (_score >= 150)
         {
             if (_spawnBoss)
             {
@@ -78,7 +78,7 @@ public class UIManager : MonoBehaviour
             }
         }
         
-        if(_score > 30)
+        if(_score > 20)
             GameObject.FindWithTag("SpawnManager").GetComponent<SpawnManager>()._spawnStrongAliens = true;
         
     }
@@ -137,7 +137,7 @@ public class UIManager : MonoBehaviour
         Material permaUpMat = null;
         switch (_score)
         {
-            case 20:
+            case 30:
                 foreach (Material mat in _permaUpMats)
                 {
                     if (mat.name.Contains("double"))

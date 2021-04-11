@@ -19,7 +19,7 @@ public class GameOverUIManager : MonoBehaviour
         int score = FindObjectOfType<UIManager>().GetScore();
         if (FindObjectOfType<UIManager>()._bossBeaten)
         {
-            _gameOverText.text = "Victory! You bet the Game!";
+            _gameOverText.text = "Victory! You beat the Game!";
             //clear remaining hearts in victory screen
             FindObjectOfType<HealthBar>().ClearBar();
         }
