@@ -99,6 +99,7 @@ public class SpawnManager : MonoBehaviour
     public void SpawnBoss()
     {
         Instantiate(_bossPrefab, new Vector3(Random.Range(-8f, 8f), 6f, 0f), Quaternion.Euler(0, 180, 0), this.transform);
+        FindObjectOfType<UIManager>()._spawnBoss = false;
     }
 }
 

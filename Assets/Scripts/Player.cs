@@ -163,6 +163,7 @@ public class Player : MonoBehaviour
             if (Input.GetKey(KeyCode.Space) && Time.time > _timeToVaccinate)
             {
                 Debug.Log("Space Pressed");
+                _vaccinePrefab.GetComponent<AudioSource>().volume = 0.1f;
                 ShootLaser();
             }
         }

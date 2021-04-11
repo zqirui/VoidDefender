@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,13 +9,10 @@ public class BossScript : MonoBehaviour
     private GameObject _bossPrefab;
 
     [SerializeField] 
-    private float _bossSpeed = 5f;
+    private float _bossSpeed = 2.5f;
 
     [SerializeField] 
     private int _bossLife = 100;
-
-    [SerializeField] 
-    public bool _bossFight = false;
 
     [SerializeField] 
     private GameObject _bossBeam;
@@ -42,43 +38,40 @@ public class BossScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_bossFight)
+        if (transform.position.x >= 8)
         {
-            if (transform.position.x >= 8)
-            {
-                _moveDirection = Vector3.right;
-            }
-            else if (transform.position.x <= -8)
-            {
-                _moveDirection = Vector3.left;
-            }
+            _moveDirection = Vector3.right;
+        }
+        else if (transform.position.x <= -8)
+        {
+            _moveDirection = Vector3.left;
+        }
 
-            if (_allowBossActive)
+        if (_allowBossActive)
+        {
+            if (_bossLife == 30)
+                _bossSpeed = 5f;
+            transform.Translate(_moveDirection * _bossSpeed * Time.deltaTime);
+            //shoot big beam
+            if (Time.time > _nextBeamTime)
             {
-                if (_bossLife == 30)
-                    _bossSpeed = 7.5f;
-                transform.Translate(_moveDirection * _bossSpeed * Time.deltaTime);
-                //shoot big beam
-                if (Time.time > _nextBeamTime)
-                {
-                    _nextBeamTime = Time.time + _nextBeamDelay;
-                    Instantiate(_bossBeam, this.transform.position + new Vector3(0, 5f, 0), Quaternion.identity);
-                }
-            
-                //shoot torpedos
-                if (Time.time > _nextTorpedoTime)
-                {
-                    _nextTorpedoTime = Time.time + _nextTorpedoDelay;
-                    Instantiate(_bossTorpedo, this.transform.position, Quaternion.Euler(90, 0 ,0));
-                }
+                _nextBeamTime = Time.time + _nextBeamDelay;
+                Instantiate(_bossBeam, this.transform.position + new Vector3(0, 5f, 0), Quaternion.identity);
             }
-            
-            this.transform.Translate(Vector3.down * 0.025f);
-            if (this.transform.position.y < 3f)
+        
+            //shoot torpedos
+            if (Time.time > _nextTorpedoTime)
             {
-                transform.position = new Vector3(transform.position.x, y: 3f, z: 0f);
-                _allowBossActive = true;
+                _nextTorpedoTime = Time.time + _nextTorpedoDelay;
+                Instantiate(_bossTorpedo, this.transform.position, Quaternion.Euler(90, 0 ,0));
             }
+        }
+        
+        this.transform.Translate(Vector3.down * 0.025f);
+        if (this.transform.position.y < 3f)
+        {
+            transform.position = new Vector3(transform.position.x, y: 3f, z: 0f);
+            _allowBossActive = true;
         }
     }
     void OnTriggerEnter(Collider other)
@@ -99,13 +92,17 @@ public class BossScript : MonoBehaviour
             }
             //remove one health point
             _bossLife--;
-            
+
+            //play damage sound feedback
+            this.GetComponentInChildren<AudioSource>().Play();
         }
 
-        if (_bossLife == 0)
+        if (_bossLife <= 0)
         {
             Destroy(this.gameObject);
             FindObjectOfType<SpawnManager>().PlayEnemyDestroyedSound();
+            //50 points for finishing the boss
+            GameObject.FindWithTag("Player").GetComponent<Player>().RelayScore(50);
             //Transition to Game Over (Victory) Screen
             GameObject.FindWithTag("GameUIManager").GetComponent<UIManager>().HideVisuals();
             GameObject.FindWithTag("GameUIManager").GetComponent<UIManager>()._bossBeaten = true;

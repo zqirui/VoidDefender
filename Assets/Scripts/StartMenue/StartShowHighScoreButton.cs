@@ -34,11 +34,16 @@ public class StartShowHighScoreButton : MonoBehaviour
             highScores = SubmitHighScoreButton.GetHighScore(filePath);
         }
 
-        for (int i = 0; i < highScores.Count; i++)
+        if (highScores.Count == 0)
+            _highScoreTable.text = "No High Scores yet, play to submit!";
+        else
         {
-            highScoreTable += i + 1 + ". " + highScores[i].GetName() + "     " + highScores[i].GetScore() + "\n";
-        }
+            for (int i = 0; i < highScores.Count; i++)
+            {
+                highScoreTable += i + 1 + ". " + highScores[i].GetName() + "     " + highScores[i].GetScore() + "\n";
+            }
 
-        _highScoreTable.text = highScoreTable;
+            _highScoreTable.text = highScoreTable;
+        }
     }
 }
