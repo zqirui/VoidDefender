@@ -15,6 +15,8 @@ public class BossTorpedo : MonoBehaviour
     private float _angleRotation;
 
     [SerializeField] private RocketCollisionZone _collisionZone;
+    [SerializeField] private GameObject _firePrefab;
+    private bool _fire = true;
     
     // Update is called once per frame
     private void Start()
@@ -24,6 +26,13 @@ public class BossTorpedo : MonoBehaviour
 
     void Update()
     {
+        
+        if (_fire)
+        {
+            Instantiate(_firePrefab,this.transform.position,Quaternion.Euler(-90,0,0),this.transform);
+            _fire = false;
+        }
+        
         // Shooting down
         transform.Translate(Vector3.forward * _torpedoSpeed * Time.deltaTime);
 
